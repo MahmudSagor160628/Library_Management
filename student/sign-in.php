@@ -1,3 +1,43 @@
+<?php
+include('../connect.php');
+$conn = connectDB();
+session_start();
+if(isset($_SESSION['student_login'])){
+    header('location: index.php');
+}
+
+if (isset($_POST['login'])) {
+    $email    = $_POST['email'];
+    $password = $_POST['password'];
+    $sql ="SELECT * FROM `students` WHERE `email` = '$email' OR `username` = '$email'";
+    $rslt = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($rslt) ==1) {
+        $row = mysqli_fetch_assoc($rslt);
+        if (password_verify($password, $row['password'])) {
+            if ($row['status'] == 1) {
+                $_SESSION['student_login'] = $email;
+                header('location: index.php');
+                
+            }
+            else{
+                $error = "Your Account is inactive. Please contract with Librarian.";
+            }
+            
+        }
+        else{
+            $error = "Invalid Password!!";
+        }
+    }
+    else{
+        $error = "Email or Username is invalid!!";
+    }
+}
+
+
+?>
+
+
 <!doctype html>
 <html lang="en" class="fixed accounts sign-in">
 
@@ -34,33 +74,38 @@
             <!--SIGN IN FORM-->
             <div class="panel mb-none">
                 <div class="panel-content bg-scale-0">
-                    <form>
+
+                    <?php if (isset($error)) { ?>
+
+                        <div class="alert alert-danger alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <?php echo $error; ?>
+                        </div>
+
+                    <?php } ?>
+
+                    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                         <div class="form-group mt-md">
                             <span class="input-with-icon">
-                                <input type="email" class="form-control" id="email" placeholder="Email">
+                                <input type="text" class="form-control" name="email" id="email" placeholder="Email or Username" value="<?= isset($email)? $email:''?>">
                                 <i class="fa fa-envelope"></i>
                             </span>
                         </div>
                         <div class="form-group">
                             <span class="input-with-icon">
-                                <input type="password" class="form-control" id="password" placeholder="Password">
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
                                 <i class="fa fa-key"></i>
                             </span>
                         </div>
+                       
                         <div class="form-group">
-                            <div class="checkbox-custom checkbox-primary">
-                                <input type="checkbox" id="remember-me" value="option1" checked>
-                                <label class="check" for="remember-me">Remember me</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <a href="index.html" class="btn btn-primary btn-block">Sign in</a>
+                            <input type="submit" name="login" value="Sign-in" class="btn btn-primary btn-block">
                         </div>
                         <div class="form-group text-center">
                             <a href="pages_forgot-password.html">Forgot password?</a>
                             <hr/>
                              <span>Don't have an account?</span>
-                            <a href="pages_register.html" class="btn btn-block mt-sm">Register</a>
+                            <a href="register.php" class="btn btn-block mt-sm">Register</a>
                         </div>
                     </form>
                 </div>
