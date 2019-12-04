@@ -117,7 +117,7 @@ if (isset($_POST['save_books'])) {
                 <?php } ?>
 
 
-                                    <form class="form-horizontal" method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                                <form class="form-horizontal" method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                                         <h5 class="mb-lg">Add New Book</h5>
                                         <div class="form-group">
                                             <label for="book_name" class="col-sm-4 control-label">Book Name</label>

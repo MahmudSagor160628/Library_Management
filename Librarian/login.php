@@ -21,6 +21,7 @@ if (isset($_POST['login'])) {
         if ($row['password'] == $password) {
 
             $_SESSION['librarian_login'] = $email;
+            $_SESSION['librarian_username'] = $row['username'];
              header('location: index.php');
                 
             

@@ -1,4 +1,6 @@
 <?php
+
+$con = mysqli_connect('localhost', 'root', '', 'library_management');
 $self = $_SERVER['PHP_SELF'];
 $totalpage = explode('/',$self);
 $page = $totalpage[count($totalpage) - 1];
@@ -7,6 +9,11 @@ session_start();
 if(!isset($_SESSION['librarian_login'])){
     header('location: login.php');
 }
+
+$librarian_login = $_SESSION['librarian_login'];
+$libraraian_sql = "SELECT * FROM `librarian` WHERE `email` = '$librarian_login' OR `username` = '$librarian_login'";
+$data = mysqli_query($con, $libraraian_sql);
+$librarian_info = mysqli_fetch_assoc($data);
 
 ?>
 
@@ -143,7 +150,7 @@ if(!isset($_SESSION['librarian_login'])){
                             <img alt="profile photo" src="../assets/images/avatar/avatar_user.jpg" />
                         </div>
                         <div class="user-info">
-                            <span class="user-name">Jane Doe</span>
+                            <span class="user-name"><?= ucwords($librarian_info['firstname'].' '.$librarian_info['lastname']) ?></span>
                             <span class="user-profile">Admin</span>
                         </div>
                         <i class="fa fa-plus icon-open" aria-hidden="true"></i>
@@ -196,7 +203,12 @@ if(!isset($_SESSION['librarian_login'])){
                                         <li class="<?= $page == 'manage_book.php'? 'active-item' :''?>"><a href="manage_book.php">Manage Books</a></li>
                                     </ul>
                                 </li>
+
+                                <li class="<?= $page == 'issue_book.php'? 'active-item' :''?>"><a href="issue_book.php"><i class="fa fa-book" aria-hidden="true"></i><span>Issue Book</span></a>
+                                </li>
                                 
+                                <li class="<?= $page == 'return_book.php'? 'active-item' :''?>"><a href="return_book.php"><i class="fa fa-book" aria-hidden="true"></i><span>Return Book</span></a>
+                                </li>
 
                                
                             </ul>

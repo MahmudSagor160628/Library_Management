@@ -36,6 +36,8 @@ if(!isset($_SESSION['student_login'])){
     <link rel="stylesheet" href="..assets/vendor/toastr/toastr.min.css">
     <!--Magnific popup-->
     <link rel="stylesheet" href="..assets/vendor/magnific-popup/magnific-popup.css">
+    <!--dataTable-->
+    <link rel="stylesheet" href="../assets/vendor/data-table/media/css/dataTables.bootstrap.min.css">
     <!--TEMPLATE css-->
     <!-- ========================================================= -->
     <link rel="stylesheet" href="../assets/stylesheets/css/style.css">
@@ -185,7 +187,7 @@ if(!isset($_SESSION['student_login'])){
                                 <!--HOME-->
                                 <li class="<?= $page == 'index.php'? 'active-item' :''?>"><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i><span>Dashboard</span></a></li>
 
-                                <li class="<?= $page == 'test.php'? 'active-item' :'';?>"><a href="test.php"><i class="fa fa-home" aria-hidden="true"></i><span>Test</span></a></li>
+                                <li class="<?= $page == 'book.php'? 'active-item' :'';?>"><a href="book.php"><i class="fa fa-book" aria-hidden="true"></i><span>Book</span></a></li>
                                 
 
                                

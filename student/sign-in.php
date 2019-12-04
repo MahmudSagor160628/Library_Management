@@ -17,6 +17,7 @@ if (isset($_POST['login'])) {
         if (password_verify($password, $row['password'])) {
             if ($row['status'] == 1) {
                 $_SESSION['student_login'] = $email;
+                $_SESSION['student_roll'] = $row['roll'];
                 header('location: index.php');
                 
             }
